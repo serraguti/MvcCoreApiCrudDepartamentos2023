@@ -39,5 +39,39 @@ namespace MvcCoreApiCrudDepartamentos2023.Controllers
                 await this.service.GetDepartamentosLocalidadAsync(localidad);
             return View(departamentos);
         }
+
+        public IActionResult CreateDepartamento()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDepartamento(Departamento departamento)
+        {
+            await this.service.InsertDepartamentoAsync(departamento.IdDepartamento
+                , departamento.Nombre, departamento.Localidad);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UpdateDepartamento(int iddepartamento)
+        {
+            Departamento departamento = 
+                await this.service.FindDepartamentoAsync(iddepartamento);
+            return View(departamento);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateDepartamento(Departamento departamento)
+        {
+            await this.service.UpdateDepartamentoAsync(departamento.IdDepartamento
+                , departamento.Nombre, departamento.Localidad);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteDepartamento(int iddepartamento)
+        {
+            await this.service.DeleteDepartamentoAsync(iddepartamento);
+            return RedirectToAction("Index");
+        }
     }
 }
