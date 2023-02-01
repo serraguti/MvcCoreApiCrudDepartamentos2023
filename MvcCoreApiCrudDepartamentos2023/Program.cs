@@ -1,7 +1,13 @@
+using MvcCoreApiCrudDepartamentos2023.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+string urlApiDepartamentos =
+    builder.Configuration.GetValue<string>("ApiUrls:ApiCrudDepartamentos");
+builder.Services.AddTransient<ServiceDepartamentos>
+    (x => new ServiceDepartamentos(urlApiDepartamentos));
 
 var app = builder.Build();
 
